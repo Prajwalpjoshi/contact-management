@@ -16,7 +16,7 @@ MongoDB Atlas account for cloud database hosting.
 Git to clone the repository.
 
 Step 1: Clone the Repository
-git clone https://github.com/your-username/contact-management-app.git
+git clone https://github.com/Prajwalpjoshi/contact-management.git
 cd contact-management-app
 
 Step 2: Backend Setup

@@ -13,12 +13,54 @@ const ContactForm = ({ refreshContacts }) => {
     jobTitle: "",
   });
 
+  const [errors, setErrors] = useState({
+    email: "",
+    phone: "",
+  });
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone) => {
+    const phoneRegex = /^\d{10}$/;
+    return phoneRegex.test(phone);
+  };
+
   const handleChange = (e) => {
-    setContact({ ...contact, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setContact({ ...contact, [name]: value });
+
+    if (name === "email") {
+      setErrors({
+        ...errors,
+        email: validateEmail(value) ? "" : "Invalid email format",
+      });
+    }
+
+    if (name === "phone") {
+      setErrors({
+        ...errors,
+        phone: validatePhone(value) ? "" : "Phone number must be 10 digits",
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Final validation before submitting
+    if (!validateEmail(contact.email)) {
+      setErrors({ ...errors, email: "Invalid email format" });
+      return;
+    }
+
+    if (!validatePhone(contact.phone)) {
+      setErrors({ ...errors, phone: "Phone number must be 10 digits" });
+      return;
+    }
+
     try {
       await axios.post("http://localhost:5000/contacts", contact);
       refreshContacts();
@@ -29,6 +71,10 @@ const ContactForm = ({ refreshContacts }) => {
         phone: "",
         company: "",
         jobTitle: "",
+      });
+      setErrors({
+        email: "",
+        phone: "",
       });
     } catch (err) {
       console.error(err.message);
@@ -51,6 +97,8 @@ const ContactForm = ({ refreshContacts }) => {
               onChange={handleChange}
               fullWidth
               required
+              error={!!errors[field]}
+              helperText={errors[field]}
             />
           )
         )}
