@@ -1,0 +1,32 @@
+/* Contacts.css */
+
+/* Styles for the ContactForm component */
+.contact-form-container {
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.contact-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.contact-form-button {
+  grid-column: 1 / -1;
+}
+
+/* Styles for the ContactsTable component */
+.contacts-table-container {
+  margin-top: 16px;
+}
+
+.contacts-table-header {
+  padding: 16px;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.table-actions button {
+  margin-right: 8px;
+}
